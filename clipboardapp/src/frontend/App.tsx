@@ -1,5 +1,7 @@
 import { ButtonHTMLAttributes, ChangeEvent, useState } from 'react'
 import './App.css'
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
 function App() {
   // Create state for the snippet title
@@ -9,7 +11,7 @@ function App() {
 
 
   // State for when user actually clicks a button to submit
-  const [submit] = useState({
+  const [submit, setSubmit] = useState({
     submitTitle: "", submitDesc: ""
   });
 
@@ -19,12 +21,20 @@ function App() {
     console.log(name, value)
   };
 
-  const handleSubmissionTitle = () =>{
-    submit.submitTitle = data.snippetTitle;
-  }
+  // handle input 
+  const handleSubmissionTitle = () => {
+    setSubmit((prevSubmit) => ({
+      ...prevSubmit,
+      submitTitle: data.snippetTitle,
+    }));
+  };
+
   const handleSubmissionDesc = () => {
-    submit.submitDesc = data.snippetDesc;
-  }
+    setSubmit((prevSubmit) => ({
+      ...prevSubmit,
+      submitDesc: data.snippetDesc,
+    }));
+  };
 
 
 
@@ -37,37 +47,46 @@ function App() {
 
       <div className="title">
         {/* Define user submission for their data */}
-        <label htmlFor="title">Title: </label>
-      <input
-        id="data.snippetTitle"
+      <TextField
+        id="outlined-basic"
         name="snippetTitle"
         type="text"
+        label="Snippet Title"
         required
         // value={data.snippetTitle}
         value={data.snippetTitle}
         onChange={handleChange}
-        maxLength={50}
         placeholder="Enter a title"
+        sx={{ // sx prop
+          input: {
+            color: "white",
+          
+          }
+        }}
       />
 
-      <button id='title-btn' type='button' onClick={handleSubmissionTitle}> Enter Title </button>
+      <Button id='title-btn' type='button' onClick={handleSubmissionTitle} variant="contained"> Enter Title </Button>
 
 
       <br></br>
 
-<label htmlFor="desc">Desc: </label>
-      <input
-        id="data.snippetDesc"
+      <TextField
+        id="outlined-basic"
         name="snippetDesc"
         type="text"
         required
+        label="Snippet Desc"
         value={data.snippetDesc}
         onChange={handleChange}
-        maxLength={50}
         placeholder="Enter a desc"
+        sx={{
+          input: {
+            color: "white"
+          }
+        }}
       />
 
-<button id ='desc-btn' type='button' onClick={handleSubmissionDesc}> Enter Desc </button>
+<Button id ='desc-btn' variant="contained" type='button' onClick={handleSubmissionDesc}> Enter Desc </Button>
 
     <p>Title: {submit.submitTitle}</p>
     <p>Snippet: {submit.submitDesc}</p>
