@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { ButtonHTMLAttributes, ChangeEvent, useState } from 'react'
 import './App.css'
 
 function App() {
@@ -7,10 +7,26 @@ function App() {
     snippetTitle: "", snippetDesc: ""
   });
 
+
+  // State for when user actually clicks a button to submit
+  const [submit] = useState({
+    submitTitle: "", submitDesc: ""
+  });
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setData({ ...data, [name]: value });
+    console.log(name, value)
   };
+
+  const handleSubmissionTitle = () =>{
+    submit.submitTitle = data.snippetTitle;
+  }
+  const handleSubmissionDesc = () => {
+    submit.submitDesc = data.snippetDesc;
+  }
+
+
 
 
 
@@ -24,30 +40,37 @@ function App() {
         <label htmlFor="title">Title: </label>
       <input
         id="data.snippetTitle"
-        name="data.snippetTitle"
+        name="snippetTitle"
         type="text"
         required
         // value={data.snippetTitle}
-        defaultValue={data.snippetTitle}
+        value={data.snippetTitle}
         onChange={handleChange}
         maxLength={50}
         placeholder="Enter a title"
       />
 
+      <button id='title-btn' type='button' onClick={handleSubmissionTitle}> Enter Title </button>
+
+
+      <br></br>
+
 <label htmlFor="desc">Desc: </label>
       <input
         id="data.snippetDesc"
-        name="data.snippetDesc"
+        name="snippetDesc"
         type="text"
         required
-        defaultValue={data.snippetDesc}
+        value={data.snippetDesc}
         onChange={handleChange}
         maxLength={50}
         placeholder="Enter a desc"
       />
 
-    <p>Title: {data.snippetTitle}</p>
-    <p>Snippet: {data.snippetDesc}</p>
+<button id ='desc-btn' type='button' onClick={handleSubmissionDesc}> Enter Desc </button>
+
+    <p>Title: {submit.submitTitle}</p>
+    <p>Snippet: {submit.submitDesc}</p>
       </div>
 
 
